@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+
+  keycloak:
+    container_name: keycloak
+    image: jboss/keycloak
+    ports:
+      - "8090:8080"
+    environment:
+      - "KEYCLOAK_USER=admin"
+      - "KEYCLOAK_PASSWORD=password"
+      - "KEYCLOAK_IMPORT=/tmp/oauth2-sample-realm-config.json"
+      - "KEYCLOAK_MIGRATION_STRATEGY=OVERWRITE_EXISTING"
+      - "DB_VENDOR=postgres"
+      - "DB_ADDR=postgres"
+      - "DB_DATABASE=keycloak"
+      - "DB_USER=keycloak"
+      - "DB_PASSWORD=postgres"
+      - "PROXY_ADDRESS_FORWARDING=true"
+    volumes:
+      - ./oauth2-sample-realm-config.json:/tmp/oauth2-sample-realm-config.json
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_DB=keycloak"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_USER=keycloak"
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

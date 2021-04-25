@@ -25,6 +25,9 @@
         <module>authorization</module>
         <module>resource</module>
         <module>client</module>
+
+        <module>resource-server</module>
+        <module>client-app</module>
     </modules>
 
 

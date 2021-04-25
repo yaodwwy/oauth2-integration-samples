@@ -9,6 +9,7 @@ logging:
     org.springframework.security.oauth2: INFO
 #    org.springframework.boot.autoconfigure: DEBUG
 
+
 spring:
   thymeleaf:
     cache: false
@@ -39,9 +40,23 @@ spring:
             authorization-grant-type: client_credentials
             scope: message.read,message.write
             client-name: messaging-client-client-credentials
+          messaging-client-password:
+            provider: spring
+            client-id: password-client
+            client-secret: secret
+            access-token-uri: http://auth-server:8090/oauth/token
+            authorization-grant-type: password
+            scope: message.read,message.write
+            client-name: messaging-client-password
         provider:
           spring:
             issuer-uri: http://auth-server:9000
 
 messages:
   base-uri: http://127.0.0.1:8090/messages
+
+management:
+  endpoint:
+    health:
+      show-details: always
+

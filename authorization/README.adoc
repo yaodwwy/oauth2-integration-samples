@@ -16,6 +16,10 @@ Or import the project into your IDE and run `OAuth2AuthorizationServerApplicatio
 
 Once it is up, this request asks for a token with the "message:read" scope:
 
+```http
+POST
+```
+
 ```bash
 curl reader:secret@localhost:8081/oauth/token -d grant_type=password -d username=subject -d password=password
 ```

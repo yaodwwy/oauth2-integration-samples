@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 8092
 
 logging:
   level:
@@ -7,7 +7,11 @@ logging:
     org.springframework.web: INFO
     org.springframework.security: INFO
     org.springframework.security.oauth2: INFO
-spring:
-  datasource:
-    schema: classpath:oauth2-client-schema.sql
 #    org.springframework.boot.autoconfigure: DEBUG
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8090/auth/realms/oauth2-sample/protocol/openid-connect/certs

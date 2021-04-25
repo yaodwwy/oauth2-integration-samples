@@ -1,13 +1,11 @@
 ### CODE 模式 ###
 
 ### 获取CODE
-POST {{auth-server}}/oauth/authorize
+GET {{auth-server}}/oauth2/authorize
 Content-Type: application/x-www-form-urlencoded
-Accept: */*
-Cache-Control: no-cache
-Authorization: Basic {{username}} {{password}}
+#Authorization: Basic {{username}} {{password}}
 
-grant_type=authorization_code&client_id=hello&response_type=code&redirect_uri=http://localhost
+grant_type=authorization_code&response_type=code&client_id=messaging-client&scope=message.read%20message.write&redirect_uri=http://127.0.0.1:8080/authorized
 
 > {% client.global.set("code",response.headers.valueOf("Location").split("code=")[1])%}
 
@@ -21,6 +19,15 @@ Accept: */*
 
 > {% client.global.set("token", response.body.access_token); %}
 
+### scope=message.read%20message.write&state=eDusiI8AlcxXo8VuT5pBIhk33xeR9H0ZXPTpjxrHlOY%3D&redirect_uri=http://127.0.0.1:8080/authorized
+###
+POST {{auth-server}}/login/oauth2/password/messaging-password
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {{username}} {{password}}
+
+grant_type=password&client_id=messaging-client&client_secret=secret
+
 ### 获取用户信息
 GET {{auth-server}}/me
 Authorization: bearer {{token}}
+
